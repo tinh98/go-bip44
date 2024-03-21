@@ -1,4 +1,4 @@
-module bip44
+module github.com/tinh98/go-bip44
 
 go 1.19
 
