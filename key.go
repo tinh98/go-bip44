@@ -2,7 +2,7 @@ package bip44
 
 import (
 	"encoding/hex"
-	"github.com/btcsuite/btcutil/hdkeychain"
+	"github.com/btcsuite/btcd/btcutil/hdkeychain"
 )
 
 type ExtendedKey struct {
@@ -55,17 +55,17 @@ func (e *ExtendedKey) baseDeriveAccount(purpose Purpose, coinType CoinType, accI
 		accIndex = HardenedKeyZeroIndex + accIndex
 	}
 
-	purposeK, err := e.key.Child(purposeIndex)
+	purposeK, err := e.key.Derive(purposeIndex)
 	if err != nil {
 		return nil, err
 	}
 
-	cTypeK, err := purposeK.Child(coinTypeIndex)
+	cTypeK, err := purposeK.Derive(coinTypeIndex)
 	if err != nil {
 		return nil, err
 	}
 
-	accK, err := cTypeK.Child(accIndex)
+	accK, err := cTypeK.Derive(accIndex)
 	if err != nil {
 		return nil, err
 	}

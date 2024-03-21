@@ -1,7 +1,7 @@
 package bip44
 
 import (
-	"github.com/btcsuite/btcutil/hdkeychain"
+	"github.com/btcsuite/btcd/btcutil/hdkeychain"
 )
 
 type AccountKey struct {
@@ -30,12 +30,12 @@ func (k *AccountKey) DeriveP2PKAddress(changeType ChangeType, index uint32, netw
 
 	var changeTypeIndex = uint32(changeType)
 
-	changeTypeK, err := k.extendedKey.Child(changeTypeIndex)
+	changeTypeK, err := k.extendedKey.Derive(changeTypeIndex)
 	if err != nil {
 		return nil, err
 	}
 
-	addressK, err := changeTypeK.Child(index)
+	addressK, err := changeTypeK.Derive(index)
 	if err != nil {
 		return nil, err
 	}
